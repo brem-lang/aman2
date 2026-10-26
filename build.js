@@ -20,6 +20,15 @@ const Terminal = require('./assets/terminal.js');
 const ROOT = __dirname;
 const LANGS = ['ar', 'en'];
 
+/* ---------- نسخة الملفات (cache busting): بصمة المحتوى تتغير فقط عند تعديل الملف ---------- */
+const crypto = require('crypto');
+const ASSET_VER = {};
+['style.css', 'icons.js', 'app.js'].forEach(f => {
+  const buf = fs.readFileSync(path.join(ROOT, 'assets', f));
+  ASSET_VER[f] = crypto.createHash('sha256').update(buf).digest('hex').slice(0, 10);
+});
+const asset = (base, f) => `${base}${f}?v=${ASSET_VER[f]}`;
+
 /* ---------- دمج كل الصفحات في قائمة واحدة ---------- */
 const PAGES = [];
 PAGES.push(core.HOME);
@@ -562,7 +571,7 @@ function buildPage(page, lang, depth) {
   <link rel="alternate" hreflang="ar" href="${lang === 'ar' ? (isRoot ? './' : '../') + 'index.html' : '../ar/' + page.slug + '.html'}">
   <link rel="alternate" hreflang="en" href="">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@300;400;500;600;700;800&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="${assetPath}style.css">
+<link rel="stylesheet" href="${asset(assetPath, 'style.css')}">
 </head>
 <body data-page="${page.slug}"${isRoot ? ' data-root="1"' : ''}>
 
@@ -579,8 +588,8 @@ ${body}
   ${nav}
 </ul></nav>
 
-<script src="${assetPath}icons.js"></script>
-<script src="${assetPath}app.js"></script>
+<script src="${asset(assetPath, 'icons.js')}"></script>
+<script src="${asset(assetPath, 'app.js')}"></script>
 </body>
 </html>
 `;
