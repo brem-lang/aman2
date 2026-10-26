@@ -763,7 +763,7 @@ var PLATFORMS = {
       text: L('منصة تداول متكاملة تعمل من المتصفح مباشرة: قوائم مراقبة، رسوم شموع، أوامر مشروطة، وتنفيذ بلا انقطاع.',
               'A complete browser-based platform: watchlists, candlestick charts, conditional orders and uninterrupted execution.'),
       ctas: [
-        { label: L('ابدأ التداول', 'Start trading'), href: 'web.html', style: 'white' },
+        { label: L('ابدأ التداول', 'Start trading'), href: 'https://trading.amanncapital.com', style: 'white' },
         { label: L('التسعير', 'View pricing'), href: 'pricing.html', style: 'outline' }
       ],
       badges: [
